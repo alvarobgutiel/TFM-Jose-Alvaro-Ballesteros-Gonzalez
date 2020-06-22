@@ -1,4 +1,4 @@
-# March 2010
+# March 2020
 
 # Single cell analysis - SingleCellExperiment, scater, scran
 # GSE138852
@@ -102,38 +102,7 @@ jpeg(file="./figures/7.Differential Expression_20/HeatMap.jpeg", width=6, height
 aheatmap(mat, annCol = colData(sce.hvg[mostDE,])$condition)
 dev.off()
 
-#---------------------------------Differential Expression (edgeR)-----------------------------------------------------
 
-dge = DGEList(
-  counts = assays(sce.hvg)$counts,
-  norm.factors = rep(1, length(assays(sce.hvg)$counts[1,])),
-  group = sce.hvg$condition
-)
-
-group_edgeR = factor(sce.hvg$condition)
-design = model.matrix(~ group_edgeR)
-dge = estimateDisp(dge, design = design, trend.method = "none")
-fit = glmFit(dge, design)
-lrt = glmLRT(fit)
-
-DEedgeR <- topTags(lrt, n= Inf)
-head(DEedgeR$table)
-DEedgeR <- DEedgeR$table
-
-jpeg(file="./figures/7.Differential Expression_20/edgeR.jpeg", width=6, height=4, units="in", res=300)
-DEedgeR %>% ggplot(aes(x= FDR)) + geom_histogram(binwidth= 0.05) +
-  ggtitle("Adjusted P Value Distribution")
-dev.off()
-
-DEedgeR %>% filter(FDR <= 0.25) %>% nrow()
-
-deGenes <- decideTestsDGE(lrt, p=0.001)
-deGenes <- rownames(lrt)[as.logical(deGenes)]
-
-jpeg(file="./figures/7.Differential Expression_20/Smear.jpeg", width=6, height=4, units="in", res=300)
-plotSmear(lrt, de.tags=deGenes)
-abline(h=c(-1, 1), col=2)
-dev.off()
 
 #-----------------------------------------Save data----------------------------------------------------------------------
 
