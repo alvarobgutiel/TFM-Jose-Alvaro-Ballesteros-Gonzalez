@@ -1,4 +1,4 @@
-# March 2010
+# March 2020
 
 # Single cell analysis - SingleCellExperiment, scater, scran
 # GSE138852
@@ -77,7 +77,7 @@ dev.off()
 #-----------------------------------------------goseq all---------------------------------------------------------------
 
 #selecciona genes con logFC diferente de 0. A continuacion ajusta los p-valores.
-#y por último genera una variable de 0 y 1, donde 1 es DE y 0 NO.
+#y por Ãºltimo genera una variable de 0 y 1, donde 1 es DE y 0 NO.
 genes=as.integer(p.adjust(results$pvalue[results$logFC!=0],method = "BH")<.05)
 table(genes) #los resultados coinciden con la exploracion que vimos antes: 563 DE,17 no
 
