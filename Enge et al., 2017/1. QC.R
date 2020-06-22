@@ -1,23 +1,9 @@
 
-# March 2010
+# March 2020
 
 # Single cell analysis - SingleCellExperiment
 # GSE81547
 #QC analysis
-
-#------------------------------------------------------------------------------------------
-
-#Metadata
-#nCount
-#nFeatures
-#size_factors
-#addPerCellQC
-#addPerFeatureQC
-#Mitochondrial genes ratio
-#Ribosome genes ratio
-#Filtering
-#Cell cycle
-#Cell cycle scores
 
 #------------------------------Library---------------------------------------------------
 
