@@ -2,7 +2,7 @@
 # March 2020
 
 # Single cell analysis - SingleCellExperiment
-# GSE138852
+# Mathys et al., 2019
 #QC analysis
 
 
