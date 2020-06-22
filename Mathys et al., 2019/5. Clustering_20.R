@@ -1,7 +1,7 @@
-# March 2010
+# March 2020
 
 # Single cell analysis - SingleCellExperiment, scater, scran
-# GSE138852
+# Mathys et al., 2019
 # Clustering
 
 library(SingleCellExperiment)
@@ -78,47 +78,46 @@ dev.off()
 
 #----------------------------------------Correlations-------------------------------------------------------
 
-# d = dist(reducedDims(sce.hvg)$PCA,
-#            method="euclidean")
-# #Compute sample correlations
-# sample_cor = cor( Matrix::t(reducedDims(sce.hvg)$PCA) )
-# #Transform the scale from correlations
-# sample_cor = (1 - sample_cor) / 2
-# #Convert it to a distance object
-# d2 = as.dist(sample_cor)
-# 
-# #euclidean
-# h_euclidean = hclust(d, method="ward.D2")
-# #correlation
-# h_correlation = hclust(d2, method="ward.D2")
-# 
-# #euclidean distance
-# sce.hvg$hc_euclidean_5 = factor( cutree(h_euclidean,k = 5) )
-# sce.hvg$hc_euclidean_10 = factor( cutree(h_euclidean,k = 10) )
-# sce.hvg$hc_euclidean_15 = factor( cutree(h_euclidean,k = 15) )
-# #correlation distance
-# sce.hvg$hc_corelation_5 = factor( cutree(h_correlation,k = 5) )
-# sce.hvg$hc_corelation_10 = factor( cutree(h_correlation,k = 10) )
-# sce.hvg$hc_corelation_15 = factor( cutree(h_correlation,k = 15) )
-# 
-# jpeg(file="./figures/5.Clustering_20/PCA_HC_euclidean_correlation.jpeg", width=12, height=6, units="in", res=300)
-# plot_grid(ncol = 3,
-#           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_euclidean_5")+
-#             ggplot2::ggtitle(label ="HC_euclidean_5"),
-#           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_euclidean_10")+
-#             ggplot2::ggtitle(label ="HC_euclidean_10"),
-#           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_euclidean_15")+
-#             ggplot2::ggtitle(label ="HC_euclidean_15"),
-# 
-#           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_corelation_5")+
-#             ggplot2::ggtitle(label ="HC_correlation_5"),
-#           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_corelation_10")+
-#             ggplot2::ggtitle(label ="HC_correlation_10"),
-#           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_corelation_15")+
-#             ggplot2::ggtitle(label ="HC_correlation_15")
-# )
-# dev.off()
-
+ d = dist(reducedDims(sce.hvg)$PCA,
+            method="euclidean")
+ #Compute sample correlations
+ sample_cor = cor( Matrix::t(reducedDims(sce.hvg)$PCA) )
+ #Transform the scale from correlations
+ sample_cor = (1 - sample_cor) / 2
+ #Convert it to a distance object
+ d2 = as.dist(sample_cor)
+ 
+ #euclidean
+ h_euclidean = hclust(d, method="ward.D2")
+ #correlation
+ h_correlation = hclust(d2, method="ward.D2")
+ 
+ #euclidean distance
+ sce.hvg$hc_euclidean_5 = factor( cutree(h_euclidean,k = 5) )
+ sce.hvg$hc_euclidean_10 = factor( cutree(h_euclidean,k = 10) )
+ sce.hvg$hc_euclidean_15 = factor( cutree(h_euclidean,k = 15) )
+ #correlation distance
+ sce.hvg$hc_corelation_5 = factor( cutree(h_correlation,k = 5) )
+ sce.hvg$hc_corelation_10 = factor( cutree(h_correlation,k = 10) )
+ sce.hvg$hc_corelation_15 = factor( cutree(h_correlation,k = 15) )
+ 
+ jpeg(file="./figures/5.Clustering_20/PCA_HC_euclidean_correlation.jpeg", width=12, height=6, units="in", res=300)
+ plot_grid(ncol = 3,
+           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_euclidean_5")+
+             ggplot2::ggtitle(label ="HC_euclidean_5"),
+           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_euclidean_10")+
+             ggplot2::ggtitle(label ="HC_euclidean_10"),
+           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_euclidean_15")+
+             ggplot2::ggtitle(label ="HC_euclidean_15"),
+ 
+           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_corelation_5")+
+             ggplot2::ggtitle(label ="HC_correlation_5"),
+           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_corelation_10")+
+             ggplot2::ggtitle(label ="HC_correlation_10"),
+           plotReducedDim(sce.hvg,dimred = "PCA",colour_by = "hc_corelation_15")+
+             ggplot2::ggtitle(label ="HC_correlation_15")
+ )
+ dev.off()
 #-------------------------------------------BRETIGEA--------------------------------------------------------------------
 
 sce.matrix = as.matrix(logcounts(sce.hvg))
