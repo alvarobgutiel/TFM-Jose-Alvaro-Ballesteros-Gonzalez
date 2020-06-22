@@ -52,37 +52,6 @@ dev.off()
 
 dec.cv2[order(dec.cv2$ratio, decreasing=TRUE),]
 
-#------------------------------------Quantifying technical noise---------------------------------------------
-
-dec.pois = modelGeneVarByPoisson(sce)
-dec.pois = dec.pois[order(dec.pois$bio, decreasing=TRUE),]
-head(dec.pois)
-
-tiff(file="./figures/3.Feature_Selection/Mean_of_log_express_vs_Variance.tiff", width=6, height=4, units="in", res=300)
-plot(dec.pois$mean, dec.pois$total, pch=16, xlab="Mean of log-expression",
-     ylab="Variance of log-expression",col="#440154")
-curve(metadata(dec.pois)$trend(x), col="#B8DE29", add=TRUE)
-dev.off()
-
-#----------------------------------Accounting for blocking factors-------------------------------------------
-
-dec.block = modelGeneVar(sce, block=sce$batch)
-head(dec.block[order(dec.block$bio, decreasing=TRUE),1:6])
-
-par(mfrow=c(1,2))
-blocked.stats= dec.block$per.block
-for (i in colnames(blocked.stats)) {
-  current = blocked.stats[[i]]
-  tiff(file=paste0("./figures/3.Feature_Selection/Mean-log-expr_vs_Vari_log_exprss_",i,".tiff"), width=6, height=4, units="in", res=300)
-  plot(current$mean, current$total, main=i, pch=16, cex=0.5,
-       xlab="Mean of log-expression", ylab="Variance of log-expression")
-  curfit = metadata(current)
-  points(curfit$mean, curfit$var, col="red", pch=16)
-  curve(curfit$trend(x), col='dodgerblue', add=TRUE, lwd=2)
-  dev.off()
-}
-
-
 #----------------------------------------HVGs-----------------------------------------------------------------
 
 # Selecting HVGs on the largest metrics
