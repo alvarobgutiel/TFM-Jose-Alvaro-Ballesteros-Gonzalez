@@ -1,7 +1,7 @@
-# March 2010
+# March 2020
 
 # Single cell analysis - SingleCellExperiment, scater, scran
-# GSE138852
+# Mathys et al., 2019
 # Feature selection. Select the most variable genes.
 
 
@@ -51,36 +51,6 @@ curve(fit.cv2$trend(x), col="#B8DE29", add=TRUE, lwd=2)
 dev.off()
 
 dec.cv2[order(dec.cv2$ratio, decreasing=TRUE),]
-
-#------------------------------------Quantifying technical noise---------------------------------------------
-
-dec.pois = modelGeneVarByPoisson(sce)
-dec.pois = dec.pois[order(dec.pois$bio, decreasing=TRUE),]
-head(dec.pois)
-
-jpeg(file="./figures/3.Feature_Selection/Mean_of_log_express_vs_Variance.jpeg", width=6, height=4, units="in", res=300)
-plot(dec.pois$mean, dec.pois$total, pch=16, xlab="Mean of log-expression",
-     ylab="Variance of log-expression",col="#440154")
-curve(metadata(dec.pois)$trend(x), col="#B8DE29", add=TRUE)
-dev.off()
-
-#----------------------------------Accounting for blocking factors-------------------------------------------
-
-dec.block = modelGeneVar(sce, block=sce$batch)
-head(dec.block[order(dec.block$bio, decreasing=TRUE),1:6])
-
-par(mfrow=c(1,2))
-blocked.stats= dec.block$per.block
-for (i in colnames(blocked.stats)) {
-  current = blocked.stats[[i]]
-  jpeg(file=paste0("./figures/3.Feature_Selection/Mean-log-expr_vs_Vari_log_exprss_",i,".jpeg"), width=6, height=4, units="in", res=300)
-  plot(current$mean, current$total, main=i, pch=16, cex=0.5,
-       xlab="Mean of log-expression", ylab="Variance of log-expression")
-  curfit = metadata(current)
-  points(curfit$mean, curfit$var, col="red", pch=16)
-  curve(curfit$trend(x), col='dodgerblue', add=TRUE, lwd=2)
-  dev.off()
-}
 
 
 #----------------------------------------HVGs-----------------------------------------------------------------
