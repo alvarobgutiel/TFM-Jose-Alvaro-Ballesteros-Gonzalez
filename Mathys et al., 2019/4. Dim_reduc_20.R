@@ -1,7 +1,7 @@
-# March 2010
+# March 2020
 
 # Single cell analysis - SingleCellExperiment, scater, scran
-# GSE138852
+# Mathys et al., 2019
 # Dimentional reduction
 
 
